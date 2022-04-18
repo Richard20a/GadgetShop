@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">GadgetShop</string>
+    <string name="login">Bejelentkezés</string>
+    <string name="register">Regisztráció</string>
+    <string name="username">Felhasználónév</string>
+    <string name="email">E-mail cím</string>
+    <string name="phone">Telefonszám</string>
+    <string name="address">Cím</string>
+    <string name="password">Jelszó</string>
+    <string name="password2">Jelszó megerősítése</string>
+    <string name="cancel">Mégse</string>
 </resources>
