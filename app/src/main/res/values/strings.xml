@@ -9,4 +9,15 @@
     <string name="password">Jelszó</string>
     <string name="password2">Jelszó megerősítése</string>
     <string name="cancel">Mégse</string>
+    <string name="addToCart">Kosárba</string>
+    <string name="logout">Kijelentkezés</string>
+    <string name="search">Search</string>
+    <string name="cart">Cart</string>
+    <string name="views">views</string>
+    <string name="settings">Beállítás</string>
+    <string-array name="shopping_item_names" />
+    <string-array name="shopping_item_desc" />
+    <string-array name="shopping_item_price" />
+    <string-array name="shopping_item_images" />
+    <string-array name="shopping_item_rates" />
 </resources>
