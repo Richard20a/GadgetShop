@@ -20,13 +20,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/itemImage"
             android:padding="8dp"
-            android:text="Termék neve"
+            android:text="@string/item_placeholder"
             android:textColor="?android:textColorSecondary" />
 
         <RatingBar
             android:id="@+id/ratingBar"
-            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
-            android:layout_width="wrap_content"
+            style="@android:style/Widget.Material.RatingBar"
+            android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/itemTitle"
             android:isIndicator="true"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ratingBar"
             android:padding="8dp"
-            android:text="Termék leírása" />
+            android:text="@string/item_info_placeholder" />
 
         <TextView
             android:id="@+id/price"
@@ -51,13 +51,28 @@
             android:padding="8dp"
             android:textColor="@color/red" />
 
-        <Button
-            android:id="@+id/add_to_cart"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/price"
-            android:layout_centerHorizontal="true"
-            android:text="@string/addToCart" />
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/add_to_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/addToCart"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/delete"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

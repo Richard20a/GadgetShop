@@ -5,6 +5,10 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +18,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -33,10 +42,14 @@ public class ShoppingActivity extends AppCompatActivity {
     private ShoppingItemAdapter mAdapter;
     private int gridNumber = 1;
     private int cartItems = 0;
+    private int itemLimit = 10;
+    private FirebaseFirestore mFirestore;
     private CollectionReference mItems;
     private boolean viewRow = true;
     private FrameLayout redCircle;
     private TextView countTextView;
+    private NotificationHandler mNotificationHandler;
+    //private AlarmManager mAlarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,28 +72,89 @@ public class ShoppingActivity extends AppCompatActivity {
         // Initialize the adapter and set it to the RecyclerView.
         mAdapter = new ShoppingItemAdapter(this, mItemsData);
         mRecyclerView.setAdapter(mAdapter);
-        // Get the data.
-        initializeData();
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mItems = mFirestore.collection("Items");
+        queryData();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_BATTERY_LOW);
+        filter.addAction(Intent.ACTION_BATTERY_OKAY);
+        this.registerReceiver(powerReceiver, filter);
+
+        mNotificationHandler = new NotificationHandler(this);
     }
 
+    BroadcastReceiver powerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String intentAction = intent.getAction();
+
+            if (intentAction == null)
+                return;
+
+            switch (intentAction) {
+                case Intent.ACTION_BATTERY_OKAY:
+                    itemLimit = 10;
+                    queryData();
+                    break;
+                case Intent.ACTION_BATTERY_LOW:
+                    itemLimit = 4;
+                    queryData();
+                    break;
+            }
+        }
+    };
+
     private void initializeData() {
-        // Get the resources from the XML file.
         String[] itemsList = getResources().getStringArray(R.array.shopping_item_names);
         String[] itemsInfo = getResources().getStringArray(R.array.shopping_item_desc);
         String[] itemsPrice = getResources().getStringArray(R.array.shopping_item_price);
         TypedArray itemsImageResources = getResources().obtainTypedArray(R.array.shopping_item_images);
         TypedArray itemRate = getResources().obtainTypedArray(R.array.shopping_item_rates);
 
-        // Create the ArrayList of Sports objects with the titles and
-        // information about each sport.
+        mItemsData.clear();
+
         for (int i = 0; i < itemsList.length; i++) {
             mItems.add(new ShoppingItem(itemsList[i], itemsInfo[i], itemsPrice[i], itemRate.getFloat(i, 0),
-                    itemsImageResources.getResourceId(i, 0)));
+                    itemsImageResources.getResourceId(i, 0), 0));
         }
 
-        // Recycle the typed array.
         itemsImageResources.recycle();
     }
+
+    private void queryData() {
+        mItemsData.clear();
+        mItems.orderBy("cartedCount", Query.Direction.DESCENDING).limit(itemLimit).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                ShoppingItem item = document.toObject(ShoppingItem.class);
+                item.setId(document.getId());
+                mItemsData.add(item);
+            }
+
+            if (mItemsData.size() == 0) {
+                initializeData();
+                queryData();
+            }
+
+            mAdapter.notifyDataSetChanged();
+        });
+    }
+
+    public void deleteItem(ShoppingItem item) {
+        DocumentReference ref = mItems.document(item._getId());
+        ref.delete()
+                .addOnSuccessListener(success -> {
+                    Log.d(LOG_TAG, "Item is successfully deleted: " + item._getId());
+                })
+                .addOnFailureListener(fail -> {
+                    Toast.makeText(this, "Item " + item._getId() + " cannot be deleted.", Toast.LENGTH_LONG).show();
+                });
+
+        queryData();
+        mNotificationHandler.cancel();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,7 +229,7 @@ public class ShoppingActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public void updateAlertIcon() {
+    public void updateAlertIcon(ShoppingItem item) {
         cartItems = (cartItems + 1);
         if (0 < cartItems) {
             countTextView.setText(String.valueOf(cartItems));
@@ -164,5 +238,13 @@ public class ShoppingActivity extends AppCompatActivity {
         }
 
         redCircle.setVisibility((cartItems > 0) ? VISIBLE : GONE);
+
+        mItems.document(item._getId()).update("cartedCount", item.getCartedCount() + 1)
+                .addOnFailureListener(fail -> {
+                    Toast.makeText(this, "Item " + item._getId() + " cannot be changed.", Toast.LENGTH_LONG).show();
+                });
+
+        mNotificationHandler.send(item.getName());
+        queryData();
     }
 }

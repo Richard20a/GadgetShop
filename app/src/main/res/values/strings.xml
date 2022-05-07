@@ -10,14 +10,82 @@
     <string name="password2">Jelszó megerősítése</string>
     <string name="cancel">Mégse</string>
     <string name="addToCart">Kosárba</string>
+    <string name="delete">Törlés</string>
     <string name="logout">Kijelentkezés</string>
     <string name="search">Search</string>
     <string name="cart">Cart</string>
     <string name="views">views</string>
     <string name="settings">Beállítás</string>
-    <string-array name="shopping_item_names" />
-    <string-array name="shopping_item_desc" />
-    <string-array name="shopping_item_price" />
-    <string-array name="shopping_item_images" />
-    <string-array name="shopping_item_rates" />
+    <string name="title_placeholder">Title</string>
+    <string name="item_placeholder">Leírás</string>
+    <string name="item_info_placeholder">Here is some news</string>
+    <string name="subtitle_detail_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ultrices congue rutrum. Phasellus elementum ipsum ac convallis aliquam. Suspendisse eleifend eros a enim faucibus mollis. Nunc placerat, est vitae vestibulum blandit, dolor diam fringilla tellus, eu euismod mauris neque at neque.</string>
+
+
+    <string-array name="shopping_item_names">
+        <item>SAMSUNG Galaxy A52S 5G okostelefon</item>
+        <item>APPLE IPHONE SE2 okostelefon</item>
+        <item>ASUS VivoBook X515JP-BQ371 laptop</item>
+        <item>LENOVO IdeaPad Gaming 3 82K20084HV Gamer laptop</item>
+        <item>XIAOMI Redmi Watch 2 Lite GL okosóra</item>
+        <item>LG 55UP78003LB Smart LED televízió</item>
+        <item>CANON Pixma TS3350 multifunkciós színes tintasugaras nyomtató</item>
+        <item>SENCOR SRV 2230TI Robotporszívó</item>
+        <item>BOSCH WAN24063BY Elöltöltős mosógép</item>
+        <item>SONY HDR-CX 625 videokamera</item>
+    </string-array>
+
+    <string-array name="shopping_item_desc">
+        <item>Szín: Fekete Operációs rendszer: Android 11 Processzor: Qualcomm SM7325 Snapdragon 778G 5G, Kapacitás: 128 GB Memória: 6 GB Képernyő: 6.5" 2400 x 1080 pixel Super AMOLED</item>
+        <item>Szín: Fekete Operációs rendszer: iOS 14 Processzor: Apple A13 Bionic chip Kapacitás: 128 GB Memória: 3 GB Képernyőátló (col): 4.7" 1334 x 750 pixel IPS</item>
+        <item>Processzor: Intel® Core™ i7–1065G7 Képernyő átmérő: 39.6 cm / 15.6 col Felbontás: 1920 x 1080 pixel Memória: 8 GB Merevlemez kapacitása: 512 GB Videókártya: NVIDIA GeForce MX330 Videókártya memória: 2 GB</item>
+        <item>Processzor: AMD® Ryzen™ 7 5800H  Képernyő átmérő: 39.6 cm / 15.6 col Felbontás: 1920 x 1080 pixel Memória: 16 GB Merevlemez kapacitása: 512 GB Videókártya: NVIDIA GeForce RTX 3050 Ti Videókártya memória: 4 GB</item>
+        <item>Bluetooth verzió: 5.0 Kijelző: TFT Akkumulátor üzemidő: 10 nap Támogatott operációs rendszerek: Android, iOS</item>
+        <item>Képernyő átmérő: 139 cm / 55 col Felbontás: 3840 x 2160 pixel Kijelző típusa: LED Szín: Fekete Bluetooth: Igen Csatlakozók: 2x HDMI, USB, RJ-45, Digitális audio kimenet (optikai), CI slot</item>
+        <item>Felbontás (nyomtatási minőség): 4800 x 1200 dpi Szkennelési felbontás: 600 x 1200 dpi</item>
+        <item>Max. teljesítmény: 40 W Max. szívási teljesítmény: 20 W Zajszint: 60 dB Portartály űrtartalma: 500 ml</item>
+        <item>Ruhatöltet (mosás): 8 kg Max. centrifugálási sebesség: 1200 rpm Mosási zajszint: 52 dB</item>
+        <item>Rögzítés helye: Memóriakártya Videó felbontás: 1920 x 1080 pixel Tényleges felbontás: 2.29 megapixel Tényleges felbontás: 2.29 megapixel Zoomtartomány: 26.8 – 804 mm</item>
+    </string-array>
+
+    <array name="shopping_item_rates">
+        <item>4</item>
+        <item>5</item>
+        <item>4.5</item>
+        <item>4</item>
+        <item>3.5</item>
+        <item>5</item>
+        <item>4.5</item>
+        <item>5</item>
+        <item>5</item>
+        <item>4</item>
+    </array>
+
+    <array name="shopping_item_images">
+        <item>@drawable/telefon1</item>
+        <item>@drawable/telefon2</item>
+        <item>@drawable/laptop1</item>
+        <item>@drawable/laptop2</item>
+        <item>@drawable/okosora</item>
+        <item>@drawable/tv</item>
+        <item>@drawable/nyomtato</item>
+        <item>@drawable/porszivo</item>
+        <item>@drawable/mosogep</item>
+        <item>@drawable/kamera</item>
+
+    </array>
+
+    <array name="shopping_item_price">
+        <item>129990 Ft</item>
+        <item>179990 Ft</item>
+        <item>254990 Ft</item>
+        <item>380990 Ft</item>
+        <item>26990 Ft</item>
+        <item>169900 Ft</item>
+        <item>17990 Ft</item>
+        <item>63390 Ft</item>
+        <item>145990 Ft</item>
+        <item>164990 Ft</item>
+    </array>
+
 </resources>

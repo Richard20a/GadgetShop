@@ -40,12 +40,9 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
 
     @Override
     public void onBindViewHolder(ShoppingItemAdapter.ViewHolder holder, int position) {
-        // Get current sport.
         ShoppingItem currentItem = mShoppingData.get(position);
 
-        // Populate the textviews with data.
         holder.bindTo(currentItem);
-
 
         if(holder.getAdapterPosition() > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
@@ -60,9 +57,6 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
     }
 
 
-    /**
-     * RecycleView filter
-     * **/
     @Override
     public Filter getFilter() {
         return shoppingFilter;
@@ -100,7 +94,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
     };
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        // Member Variables for the TextViews
+
         private TextView mTitleText;
         private TextView mInfoText;
         private TextView mPriceText;
@@ -110,14 +104,12 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
         ViewHolder(View itemView) {
             super(itemView);
 
-            // Initialize the views.
             mTitleText = itemView.findViewById(R.id.itemTitle);
             mInfoText = itemView.findViewById(R.id.subTitle);
             mItemImage = itemView.findViewById(R.id.itemImage);
             mRatingBar = itemView.findViewById(R.id.ratingBar);
             mPriceText = itemView.findViewById(R.id.price);
 
-            itemView.findViewById(R.id.add_to_cart).setOnClickListener(view -> ((ShoppingActivity)mContext).updateAlertIcon());
         }
 
         void bindTo(ShoppingItem currentItem){
@@ -126,8 +118,9 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemAdapte
             mPriceText.setText(currentItem.getPrice());
             mRatingBar.setRating(currentItem.getRatedInfo());
 
-            // Load the images into the ImageView using the Glide library.
-            //Glide.with(mContext).load(currentItem.getImageResource()).into(mItemImage);
+            Glide.with(mContext).load(currentItem.getImageResource()).into(mItemImage);
+            itemView.findViewById(R.id.add_to_cart).setOnClickListener(view -> ((ShoppingActivity)mContext).updateAlertIcon(currentItem));
+            itemView.findViewById(R.id.delete).setOnClickListener(view -> ((ShoppingActivity)mContext).deleteItem(currentItem));
         }
     }
 }
